@@ -16,14 +16,16 @@
                                 <li class="flex  task-line justify-between items-end">
                                     <p class="text-xl">{{ $task->title }}</p>
                                     <div class="flex action items-end">
-                                        <form class="edit flex items-end gap-3" action="{{ route('editTask') }}" method="post">
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit') }}" method="post">
                                             @csrf
+                                            @method('patch')
                                             <input type="hidden" value="{{ $task->id }}" name="id" hidden>
                                             <x-text-input type="text" name="title" style="max-height: 34px;" />
                                             <x-primary-button type="submit">Edit</x-primary-button>
                                         </form>
-                                        <form action="{{ route('deleteTask') }}" method="post">
+                                        <form action="{{ route('task.delete') }}" method="post">
                                             @csrf
+                                            @method('delete')
                                             <input type="hidden" value="{{ $task->id }}" name="id" hidden>
                                             <x-danger-button type="submit" class="ms-3">Delete</x-danger-button>
                                         </form>
@@ -33,7 +35,7 @@
                         @endforeach
                     </div>
 
-                    <form action="{{ route('addTask') }}" method="POST">
+                    <form action="{{ route('task.create') }}" method="POST">
                         @csrf
                         <div class="max-w-80 flex flex-col gap-2">
                             <x-input-label for="title" value="Task Title" />

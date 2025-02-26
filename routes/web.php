@@ -11,10 +11,11 @@ Route::get('/', function () {
 
 Route::get('/todo', [PageController::class, 'index'])->name('todo')->middleware('auth');
 
-Route::POST('/addTask', [TaskController::class, 'addTask'])->name('addTask')->middleware('auth');
-Route::POST('/editTask', [TaskController::class, 'editTask'])->name('editTask')->middleware('auth');
-Route::POST('/deleteTask', [TaskController::class, 'deleteTask'])->name('deleteTask')->middleware('auth');
-
+Route::middleware('auth')->group(function () {
+    Route::post('/task', [TaskController::class, 'create'])->name('task.create');
+    Route::patch('/task', [TaskController::class, 'edit'])->name('task.edit');
+    Route::delete('/task', [TaskController::class, 'delete'])->name('task.delete');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -22,4 +23,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
