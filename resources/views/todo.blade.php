@@ -16,14 +16,14 @@
                                 <li class="flex  task-line justify-between items-end">
                                     <p class="text-xl">{{ $task->title }}</p>
                                     <div class="flex action items-end">
-                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit') }}" method="post">
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
                                             @csrf
                                             @method('patch')
                                             <input type="hidden" value="{{ $task->id }}" name="id" hidden>
                                             <x-text-input type="text" name="title" style="max-height: 34px;" />
                                             <x-primary-button type="submit">Edit</x-primary-button>
                                         </form>
-                                        <form action="{{ route('task.delete') }}" method="post">
+                                        <form action="{{ route('task.delete', $task) }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <input type="hidden" value="{{ $task->id }}" name="id" hidden>

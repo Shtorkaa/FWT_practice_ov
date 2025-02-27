@@ -3,34 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
-use App\Http\Requests\DeleteTaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Task;
-
+use Auth;
 
 
 class TaskController extends Controller
 {
     public function create(StoreTaskRequest $request)
-    {
-        Task::create(attributes: $request->validated());
-
+    {        
+        Task::create([
+            'title' => $request->validated()['title'],
+            'user_id' => Auth::user()->id,
+        ]);
+        
         return redirect()->back()->with('status', 'Task added');
     }
 
-    public function delete(DeleteTaskRequest $request)
+    public function delete(Task $task)
     {
-        Task::destroy($request->validated()['id']);
+        $task->delete();
 
         return redirect()->back()->with('status', 'Task deleted');
     }
 
-    public function edit(UpdateTaskRequest $request)
+    public function edit(Request $request,  Task $task)
     {
-        $task = Task::find($request->validated()['id']);
-
-        $task->title = $request->validated()['title'];
+        $task->title = $request->title;
 
         $task->save();
 

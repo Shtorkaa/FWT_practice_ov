@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
+use App\Models\Task;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,8 +14,8 @@ Route::get('/todo', [PageController::class, 'index'])->name('todo')->middleware(
 
 Route::middleware('auth')->group(function () {
     Route::post('/task', [TaskController::class, 'create'])->name('task.create');
-    Route::patch('/task', [TaskController::class, 'edit'])->name('task.edit');
-    Route::delete('/task', [TaskController::class, 'delete'])->name('task.delete');
+    Route::patch('/task/{task}', [TaskController::class, 'edit'])->name('task.edit');
+    Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('task.delete');
 });
 
 Route::middleware('auth')->group(function () {
