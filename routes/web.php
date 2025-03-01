@@ -2,20 +2,18 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\TaskController;
-use App\Models\Task;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/todo', [PageController::class, 'index'])->name('todo')->middleware('auth');
+Route::get('/todo', [TaskController::class, 'index'])->name('todo')->middleware('auth');
 
-Route::middleware('auth')->group(function () {
-    Route::post('/task', [TaskController::class, 'create'])->name('task.create');
-    Route::patch('/task/{task}', [TaskController::class, 'edit'])->name('task.edit');
-    Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('task.delete');
+Route::middleware('auth')->name('task.')->prefix('task')->group(function () {
+    Route::post('/task', [TaskController::class, 'create'])->name('create');
+    Route::patch('/task/{task}', [TaskController::class, 'edit'])->name('edit');
+    Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('delete');
 });
 
 Route::middleware('auth')->group(function () {
