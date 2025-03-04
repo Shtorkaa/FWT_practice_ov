@@ -13,7 +13,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Auth::user()->tasks()->get();
+        $tasks = Auth::user()->tasks()->paginate(3);
 
         return view('todo', [
             'tasks' => $tasks,

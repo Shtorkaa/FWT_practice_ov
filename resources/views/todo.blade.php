@@ -33,6 +33,7 @@
                                 </li>
                             </ul>
                         @endforeach
+                        {{ $tasks->links() }}
                     </div>
 
                     <form action="{{ route('task.create') }}" method="POST">
