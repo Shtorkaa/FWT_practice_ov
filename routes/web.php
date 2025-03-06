@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/todo', [TaskController::class, 'index'])->name('todo')->middleware('auth');
+
+Route::middleware('auth')->name('task.')->prefix('task')->group(function () {
+    Route::post('/', [TaskController::class, 'create'])->name('create');
+    Route::patch('/{task}', [TaskController::class, 'edit'])->name('edit');
+    Route::delete('/{task}', [TaskController::class, 'delete'])->name('delete');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -17,4 +22,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

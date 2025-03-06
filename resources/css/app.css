@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.task-line {
+    padding: 15px 5px;
+    .action {
+        transition: .3s;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.task-line:hover {
+    .action {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
