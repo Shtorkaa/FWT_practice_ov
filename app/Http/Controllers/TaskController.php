@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
 use Gate;
 use App\Models\Task;
@@ -22,12 +23,9 @@ class TaskController extends Controller
 
     public function create(StoreTaskRequest $request)
     {
-        Auth::user()->tasks()->create([
-            'title' => $request->validated()['title'],
-            'user_id' => Auth::user()->id,
-        ]);
+        Auth::user()->tasks()->create($request->validated());
 
-        return redirect()->back()->with('status', 'Task added');
+        return redirect()->back();
     }
 
     public function delete(Task $task)
@@ -36,19 +34,16 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect()->back()->with('status', 'Task deleted');
+        return redirect()->back();
     }
 
-    public function edit(Request $request, Task $task)
+    public function edit(UpdateTaskRequest $request, Task $task)
     {
         Gate::authorize('update', $task);
 
+        $task->update($request->validated());
 
-        $task->update([
-            'title' => $request->title,
-        ]);
-
-        return redirect()->back()->with('status', 'Task updated');
+        return redirect()->back();
     }
 
 

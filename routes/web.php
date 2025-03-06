@@ -11,9 +11,9 @@ Route::get('/', function () {
 Route::get('/todo', [TaskController::class, 'index'])->name('todo')->middleware('auth');
 
 Route::middleware('auth')->name('task.')->prefix('task')->group(function () {
-    Route::post('/task', [TaskController::class, 'create'])->name('create');
-    Route::patch('/task/{task}', [TaskController::class, 'edit'])->name('edit');
-    Route::delete('/task/{task}', [TaskController::class, 'delete'])->name('delete');
+    Route::post('/', [TaskController::class, 'create'])->name('create');
+    Route::patch('/{task}', [TaskController::class, 'edit'])->name('edit');
+    Route::delete('/{task}', [TaskController::class, 'delete'])->name('delete');
 });
 
 Route::middleware('auth')->group(function () {
