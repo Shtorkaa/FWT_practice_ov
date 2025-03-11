@@ -19,3 +19,18 @@
         pointer-events: all;
     }
 }
+
+.task-active {
+    border-bottom: 3px solid #FEC001;
+    padding: 15px;
+}
+
+.task-complete {
+    border-bottom: 3px solid #1BA345;
+    padding: 15px;
+}
+
+.task-failed {
+    border-bottom: 3px solid #DE3E44;
+    padding: 15px;
+}

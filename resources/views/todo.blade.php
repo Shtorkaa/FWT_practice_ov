@@ -12,21 +12,31 @@
                     <div class="tasks flex flex-col gap-3 mb-12">
                         <h1 class="text-2xl">Task List</h1>
                         @foreach($tasks as $task)
-                            <ul class="list-decimal">
+                            <ul class="list-decimal task-{{ $task->status }}">
                                 <li class="flex  task-line justify-between items-end">
                                     <p class="text-xl">{{ $task->title }}</p>
-                                    <div class="flex action items-end">
+                                    <div class="flex gap-3 action items-end">
                                         <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
                                             @csrf
                                             @method('patch')
-                                            <input type="hidden" value="{{ $task->id }}" name="id" hidden>
+                                            <input type="hidden" name="status" value="complete" hidden>
+                                            <x-primary-button type="submit">Complete</x-primary-button>
+                                        </form>
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
+                                            @csrf
+                                            @method('patch')
+                                            <input type="hidden" name="status" value="failed" hidden>
+                                            <x-primary-button type="submit">Fail</x-primary-button>
+                                        </form>
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
+                                            @csrf
+                                            @method('patch')
                                             <x-text-input type="text" name="title" style="max-height: 34px;" />
                                             <x-primary-button type="submit">Edit</x-primary-button>
                                         </form>
                                         <form action="{{ route('task.delete', $task) }}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <input type="hidden" value="{{ $task->id }}" name="id" hidden>
                                             <x-danger-button type="submit" class="ms-3">Delete</x-danger-button>
                                         </form>
                                     </div>

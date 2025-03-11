@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('status_id');
+            $table->enum('status', ['active', 'complete', 'failed']);
             $table->string('title');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreign('status_id')->references('id')->on('statuses')->cascadeOnDelete();
         });
     }
 
