@@ -9,6 +9,7 @@ Route::get('/', function () {
 });
 
 Route::get('/todo', [TaskController::class, 'index'])->name('todo')->middleware('auth');
+Route::POST('todo/search', [TaskController::class, 'search'])->name('search')->middleware('auth');
 
 Route::middleware('auth')->name('task.')->prefix('task')->group(function () {
     Route::post('/', [TaskController::class, 'create'])->name('create');

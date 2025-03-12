@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->enum('status', ['active', 'complete', 'failed']);
+            $table->enum('status', ['active', 'complete', 'failed'])->default("active");
             $table->string('title');
             $table->timestamps();
 

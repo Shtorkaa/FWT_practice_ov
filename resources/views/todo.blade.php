@@ -10,25 +10,34 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="tasks flex flex-col gap-3 mb-12">
+                        <form class="edit flex items-end gap-3" action="{{ route('search') }}" method="post">
+                            @csrf
+                            @method('post')
+                            <x-text-input type="text" name="search" style="max-height: 34px;" />
+                            <x-primary-button type="submit">Find</x-primary-button>
+                        </form>
                         <h1 class="text-2xl">Task List</h1>
                         @foreach($tasks as $task)
                             <ul class="list-decimal task-{{ $task->status }}">
                                 <li class="flex  task-line justify-between items-end">
                                     <p class="text-xl">{{ $task->title }}</p>
                                     <div class="flex gap-3 action items-end">
-                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}"
+                                            method="post">
                                             @csrf
                                             @method('patch')
                                             <input type="hidden" name="status" value="complete" hidden>
                                             <x-primary-button type="submit">Complete</x-primary-button>
                                         </form>
-                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}"
+                                            method="post">
                                             @csrf
                                             @method('patch')
                                             <input type="hidden" name="status" value="failed" hidden>
                                             <x-primary-button type="submit">Fail</x-primary-button>
                                         </form>
-                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}" method="post">
+                                        <form class="edit flex items-end gap-3" action="{{ route('task.edit', $task) }}"
+                                            method="post">
                                             @csrf
                                             @method('patch')
                                             <x-text-input type="text" name="title" style="max-height: 34px;" />
