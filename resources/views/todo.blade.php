@@ -14,6 +14,11 @@
                             @csrf
                             @method('post')
                             <x-text-input type="text" name="search" style="max-height: 34px;" />
+                            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" id="status" name="status">
+                                @foreach ($statuses as $status)
+                                    <option value="{{$status}}">{{$status}}</option>
+                                @endforeach
+                            </select>
                             <x-primary-button type="submit">Find</x-primary-button>
                         </form>
                         <h1 class="text-2xl">Task List</h1>

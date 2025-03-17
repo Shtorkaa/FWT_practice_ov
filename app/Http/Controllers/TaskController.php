@@ -18,8 +18,11 @@ class TaskController extends Controller
     {
         $tasks = Auth::user()->tasks()->paginate(3);
 
+        $statuses = array_column(status::cases(), 'value');
+
         return view('todo', [
             'tasks' => $tasks,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -27,10 +30,19 @@ class TaskController extends Controller
     {
         $searchTitle = $request->validated()['search'];
 
-        $tasks = Auth::user()->tasks()->where('title', 'LIKE', "%{$searchTitle}%")->paginate(3);
+        $searchStatus = $request->validated()['status'];
+
+        $tasks = Auth::user()->tasks()
+                            ->where('title', 'LIKE', "%{$searchTitle}%")
+                            ->where('status', 'LIKE', "%{$searchStatus}%")
+                            ->paginate(3);
+
+        $statuses = array_column(status::cases(), 'value');
+
 
         return view('todo', [
             'tasks' => $tasks,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -38,7 +50,7 @@ class TaskController extends Controller
     {
         Auth::user()->tasks()->create($request->validated());
 
-        return redirect()->back();
+        return redirect('todo');
     }
 
     public function delete(Task $task)
@@ -47,7 +59,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect()->back();
+        return redirect('todo');
     }
 
     public function edit(UpdateTaskRequest $request, Task $task)
@@ -56,7 +68,7 @@ class TaskController extends Controller
 
         $task->update($request->validated());
 
-        return redirect()->back();
+        return redirect('todo');
     }
 
 

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\Status;
 use Auth;
 
 class SearchTaskRequest extends FormRequest
@@ -24,6 +26,10 @@ class SearchTaskRequest extends FormRequest
     {
         return [
             'search' => 'nullable|string|max:255',
+            'status' => [
+                'nullable', 
+                Rule::in(array_column(status::cases(), 'value')),
+            ]
         ];
     }
 }
