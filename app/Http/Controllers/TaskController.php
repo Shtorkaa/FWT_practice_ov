@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\SearchTaskRequest;
 use Illuminate\Http\Request;
+use App\Enums\Status;
 use Gate;
 use App\Models\Task;
 use Auth;
@@ -16,8 +18,30 @@ class TaskController extends Controller
     {
         $tasks = Auth::user()->tasks()->paginate(3);
 
+        $statuses = array_column(status::cases(), 'value');
+
         return view('todo', [
             'tasks' => $tasks,
+            'statuses' => $statuses,
+        ]);
+    }
+
+    public function search(SearchTaskRequest $request)
+    {
+        $searchTitle = $request->validated()['search'];
+
+        $searchStatus = $request->validated()['status'];
+
+        $tasks = Auth::user()->tasks()
+                            ->searchByTitle($searchTitle)
+                            ->filterByStatus($searchStatus)
+                            ->paginate(3);
+
+        $statuses = array_column(status::cases(), 'value');
+
+        return view('todo', [
+            'tasks' => $tasks,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -25,7 +49,7 @@ class TaskController extends Controller
     {
         Auth::user()->tasks()->create($request->validated());
 
-        return redirect()->back();
+        return redirect()->route('todo.index');
     }
 
     public function delete(Task $task)
@@ -34,7 +58,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect()->back();
+        return redirect()->route('todo.index');
     }
 
     public function edit(UpdateTaskRequest $request, Task $task)
@@ -43,7 +67,7 @@ class TaskController extends Controller
 
         $task->update($request->validated());
 
-        return redirect()->back();
+        return redirect()->route('todo.index');
     }
 
 

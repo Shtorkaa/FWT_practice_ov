@@ -8,7 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/todo', [TaskController::class, 'index'])->name('todo')->middleware('auth');
+Route::middleware('auth')->name('todo.')->prefix('todo')->group(function () {
+    Route::get('/', [TaskController::class, 'index'])->name('index');
+    Route::POST('/search', [TaskController::class, 'search'])->name('search');
+});
 
 Route::middleware('auth')->name('task.')->prefix('task')->group(function () {
     Route::post('/', [TaskController::class, 'create'])->name('create');

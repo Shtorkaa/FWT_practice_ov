@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\Status;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Enums\Status;
 use Auth;
 
-class UpdateTaskRequest extends FormRequest
+class SearchTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,11 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'max:255',
-            'status' => Rule::enum(Status::class),
+            'search' => 'nullable|string|max:255',
+            'status' => [
+                'nullable', 
+                Rule::enum(Status::class),
+            ]
         ];
     }
 }
