@@ -39,7 +39,6 @@ class TaskController extends Controller
 
         $statuses = array_column(status::cases(), 'value');
 
-
         return view('todo', [
             'tasks' => $tasks,
             'statuses' => $statuses,
