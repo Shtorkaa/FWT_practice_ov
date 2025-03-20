@@ -28,7 +28,7 @@ class SearchTaskRequest extends FormRequest
             'search' => 'nullable|string|max:255',
             'status' => [
                 'nullable', 
-                Rule::in(array_column(status::cases(), 'value')),
+                Rule::enum(Status::class),
             ]
         ];
     }

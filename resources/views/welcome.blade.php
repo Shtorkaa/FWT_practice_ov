@@ -14,7 +14,7 @@
                 <x-nav-link :href="route('login')">Login</x-nav-link>
                 <x-nav-link :href="route('register')">Register</x-nav-link>
                 @auth
-                <x-nav-link :href="route('todo')">My Tasks</x-nav-link>
+                <x-nav-link :href="route('todo.index')">My Tasks</x-nav-link>
                 @endauth
             </div>
         </div>

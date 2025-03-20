@@ -21,4 +21,14 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeFilterByStatus($query, $status)
+    {
+        return $query->where('status', 'LIKE', "%{$status}%");
+    }
+
+    public function scopeSearchByTitle($query, $title)
+    {
+        return $query->where('title', 'LIKE', "%{$title}%");
+    }
 }

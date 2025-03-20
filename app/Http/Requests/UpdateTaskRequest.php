@@ -26,7 +26,7 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'title' => 'max:255',
-            'status' => Rule::in(array_column(status::cases(), 'value')),
+            'status' => Rule::enum(Status::class),
         ];
     }
 }

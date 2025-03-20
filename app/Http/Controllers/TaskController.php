@@ -33,8 +33,8 @@ class TaskController extends Controller
         $searchStatus = $request->validated()['status'];
 
         $tasks = Auth::user()->tasks()
-                            ->where('title', 'LIKE', "%{$searchTitle}%")
-                            ->where('status', 'LIKE', "%{$searchStatus}%")
+                            ->searchByTitle($searchTitle)
+                            ->filterByStatus($searchStatus)
                             ->paginate(3);
 
         $statuses = array_column(status::cases(), 'value');
@@ -50,7 +50,7 @@ class TaskController extends Controller
     {
         Auth::user()->tasks()->create($request->validated());
 
-        return redirect('todo');
+        return redirect()->route('todo.index');
     }
 
     public function delete(Task $task)
@@ -59,7 +59,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect('todo');
+        return redirect()->route('todo.index');
     }
 
     public function edit(UpdateTaskRequest $request, Task $task)
@@ -68,7 +68,7 @@ class TaskController extends Controller
 
         $task->update($request->validated());
 
-        return redirect('todo');
+        return redirect()->route('todo.index');
     }
 
 

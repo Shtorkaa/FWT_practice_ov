@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="tasks flex flex-col gap-3 mb-12">
-                        <form class="edit flex items-end gap-3" action="{{ route('search') }}" method="post">
+                        <form class="edit flex items-end gap-3" action="{{ route('todo.search') }}" method="post">
                             @csrf
                             @method('post')
                             <x-text-input type="text" name="search" style="max-height: 34px;" />
